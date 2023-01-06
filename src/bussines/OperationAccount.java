@@ -4,15 +4,11 @@
  */
 package bussines;
 
-import java.util.List;
-import model.Owner;
-
 /**
  *
  * @author Josval
  */
-public class AccountsManager {
-    protected List<Owner> _owners;
+public class OperationAccount {
     
     
 }
