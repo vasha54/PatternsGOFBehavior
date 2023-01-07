@@ -4,16 +4,21 @@
  */
 package bussines;
 
+import Interfaces.IObserverAccount;
+import Interfaces.ISubjectAccount;
+import java.util.List;
+import java.util.Observer;
 import model.Owner;
 
 /**
  *
  * @author Josval
  */
-public class Account {
+public class Account implements ISubjectAccount{
     protected StateAccount _state;
     protected Owner _owner;
     protected String _identifier;
+    protected List<IObserverAccount> _observersAccount;
     
     public String getIdentifier(){
         return _identifier;
@@ -27,6 +32,7 @@ public class Account {
         this._identifier = identifier;
         this._owner = owner;
         this._state = new SilverState(100);
+        this._observersAccount = new List<IObserverAccount>();
     }
     
     public void Deposit(double amount){
@@ -39,5 +45,21 @@ public class Account {
     
     public void PayInterest(){
         _state = _state.PayInterest();
+    }
+
+    @Override
+    public void Attach(IObserverAccount observer) {
+        _observersAccount.add(observer);
+    }
+
+    @Override
+    public void Detach(IObserverAccount observer) {
+        _observersAccount.remove(observer);
+    }
+
+    @Override
+    public void Notify() {
+        for(IObserverAccount observer : _observersAccount)
+            observer.Update(this);
     }
 }
