@@ -4,10 +4,12 @@
  */
 package bussines;
 
-import Interfaces.IObserverAccount;
-import Interfaces.ISubjectAccount;
+import interfaces.IObserverAccount;
+import interfaces.ISubjectAccount;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
+
 import model.Owner;
 
 /**
@@ -32,7 +34,7 @@ public class Account implements ISubjectAccount{
         this._identifier = identifier;
         this._owner = owner;
         this._state = new SilverState(100);
-        this._observersAccount = new List<IObserverAccount>();
+        this._observersAccount = new ArrayList<IObserverAccount>();
     }
     
     public void Deposit(double amount){

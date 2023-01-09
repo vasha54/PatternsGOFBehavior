@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="PatternsGOFBehavior">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/PatternsGOFBehavior.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -11,20 +11,33 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.json.simple.parser.JSONParser;
+import util.ReadFileFromResources;
 
+/**
+ * @author Luis Andrés Valido Fajardo +53 53694742 luis.valido1989@gmail.com
+ */
 public class OwnerJSON {
 
-    private final String fileName= "owner.json" ;
+    private final String fileName= "resource/data/owner1.json" ;
 
     public OwnerJSON() {
     }
 
-    public JSONArray getOwner() throws IOException, ParseException{
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ParseException
+     * @author Luis Andrés Valido Fajardo +53 53694742 luis.valido1989@gmail.com
+     */
+    public JSONArray getOwners() throws IOException, ParseException{
         JSONParser jsonParser = new JSONParser();
-        
-        
-        FileReader reader = new FileReader(this.fileName);
-        Object obj = jsonParser.parse(reader);
+
+        ReadFileFromResources reader =new ReadFileFromResources();
+        InputStream inputStream= reader.getFileAsIOStream(this.fileName);
+
+        InputStreamReader file = new InputStreamReader(inputStream);
+        Object obj = jsonParser.parse(file);
         JSONArray owner = (JSONArray) obj;
         return owner;
     }

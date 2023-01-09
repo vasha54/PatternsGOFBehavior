@@ -1,9 +1,6 @@
-
 import gui.MainWindow;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import util.ReadFileFromResourcesUsingGetResourceAsStream;
+
+import java.awt.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,41 +15,21 @@ import util.ReadFileFromResourcesUsingGetResourceAsStream;
 public class Main {
 
     /**
-     * @param args the command line arguments
+     * Método encargado de iniciar la aplicación
+     * @param args 
+     * @author Luis Andrés Valido Fajardo +53 53694742 luis.valido1989@gmail.com
      */
     public static void main(String[] args) {
-//         try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new MainWindow().setVisible(true);
-//            }
-//        });
 
-          ReadFileFromResourcesUsingGetResourceAsStream obj =new ReadFileFromResourcesUsingGetResourceAsStream();
-          
-        try {
-            obj.printFileContent(obj.getFileAsIOStream("data/owner.json"));
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+               MainWindow gui= new MainWindow();
+               Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+               gui.setLocation(dim.width/2-gui.getSize().width/2, dim.height/2-gui.getSize().height/2);
+               gui.setVisible(true);
+            }
+        });
     }
     
 }
