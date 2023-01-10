@@ -8,8 +8,8 @@ package interfaces;
  *
  * @author Josval
  */
-public interface ISubjectAccount {
-    void Attach(IObserverAccount observer);
-    void Detach(IObserverAccount observer);
+public interface ISubjectOpertionAccount {
+    void Attach(IObserverOperationAccount observer);
+    void Detach(IObserverOperationAccount observer);
     void Notify();
 }

@@ -4,10 +4,12 @@
  */
 package interfaces;
 
+import bussines.OperationAccount;
+
 /**
  *
  * @author Josval
  */
-public interface IObserverAccount {
-    void Update(ISubjectAccount subject);
+public interface IObserverOperationAccount {
+    void Update(OperationAccount subject);
 }
