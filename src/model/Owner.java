@@ -41,5 +41,10 @@ public class Owner {
 
     public void setIdNumber(String _idNumber) {
         this._idNumber = _idNumber;
-    }   
+    }
+    
+    @Override
+    public String toString (){
+        return String.format("%s %s (%s)", _firstName, _lastName, _idNumber);
+    }
 }

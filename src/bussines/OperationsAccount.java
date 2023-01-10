@@ -8,7 +8,7 @@ package bussines;
  *
  * @author Josval
  */
-public enum OperationsAccoun {
+public enum OperationsAccount {
     CREATE,
     DEPOSIT,
     SUBSTRACT,

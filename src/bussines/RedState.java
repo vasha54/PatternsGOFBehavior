@@ -45,5 +45,10 @@ public class RedState extends StateAccount{
     @Override
     public StateAccount PayInterest() {
         return this;
-    }    
+    }   
+    
+    @Override
+    public String toString(){
+        return "RedState";
+    }
 }

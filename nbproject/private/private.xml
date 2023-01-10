@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/vasha/NetBeansProjects/PatternsGOFBehavior/src/Main.java</file>
-            <file>file:/home/vasha/NetBeansProjects/PatternsGOFBehavior/src/gui/MainWindow.java</file>
+            <file>file:/D:/_PDAS/GITHUB/PatternsGOFBehavior/src/dao/OwnerJSON.java</file>
+            <file>file:/D:/_PDAS/GITHUB/PatternsGOFBehavior/src/bussines/AccountsManager.java</file>
+            <file>file:/D:/_PDAS/GITHUB/PatternsGOFBehavior/src/Main.java</file>
+            <file>file:/D:/_PDAS/GITHUB/PatternsGOFBehavior/src/bussines/Account.java</file>
+            <file>file:/D:/_PDAS/GITHUB/PatternsGOFBehavior/src/bussines/StateAccount.java</file>
         </group>
     </open-files>
 </project-private>

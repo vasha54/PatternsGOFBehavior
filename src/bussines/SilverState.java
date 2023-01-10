@@ -46,5 +46,10 @@ public class SilverState extends StateAccount{
         _balance += _interest * _balance;
         
         return StateChangeCheck();
-    }    
+    } 
+    
+    @Override
+    public String toString(){
+        return "SilveState";
+    }
 }

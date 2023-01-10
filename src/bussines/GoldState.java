@@ -45,5 +45,10 @@ public class GoldState extends StateAccount{
         _balance += _interest * _balance;
         
         return StateChangeCheck();
+    }
+
+    @Override
+    public String toString(){
+        return "GoldState";
     }    
 }

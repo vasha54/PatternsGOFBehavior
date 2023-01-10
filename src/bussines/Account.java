@@ -16,25 +16,31 @@ import model.Owner;
  *
  * @author Josval
  */
-public class Account implements ISubjectAccount{
+public class Account {
     protected StateAccount _state;
     protected Owner _owner;
     protected String _identifier;
-    protected List<IObserverAccount> _observersAccount;
     
     public String getIdentifier(){
         return _identifier;
     }
     
-    public String OwnerDetails(){
-        return String.format("%s %s (%s)", _owner.getFirstName(), _owner.getLastName(), _owner.getIdNumber());
+    public Owner getOwner(){
+        return _owner;
+    }
+    
+    public double getBalance(){
+        return _state._balance;
+    }
+    
+    public StateAccount getState(){
+        return _state;
     }
     
     public Account(String identifier, Owner owner){
         this._identifier = identifier;
         this._owner = owner;
         this._state = new SilverState(100);
-        this._observersAccount = new ArrayList<IObserverAccount>();
     }
     
     public void Deposit(double amount){
@@ -47,21 +53,5 @@ public class Account implements ISubjectAccount{
     
     public void PayInterest(){
         _state = _state.PayInterest();
-    }
-
-    @Override
-    public void Attach(IObserverAccount observer) {
-        _observersAccount.add(observer);
-    }
-
-    @Override
-    public void Detach(IObserverAccount observer) {
-        _observersAccount.remove(observer);
-    }
-
-    @Override
-    public void Notify() {
-        for(IObserverAccount observer : _observersAccount)
-            observer.Update(this);
     }
 }
