@@ -11,5 +11,5 @@ import bussines.OperationAccount;
  * @author Josval
  */
 public interface IObserverOperationAccount {
-    void Update(OperationAccount subject);
+    void update(OperationAccount subject);
 }

@@ -4,12 +4,14 @@
  */
 package interfaces;
 
+import bussines.OperationAccount;
+
 /**
  *
  * @author Josval
  */
 public interface ISubjectOpertionAccount {
-    void Attach(IObserverOperationAccount observer);
-    void Detach(IObserverOperationAccount observer);
-    void Notify();
+    void attach(IObserverOperationAccount observer);
+    void detach(IObserverOperationAccount observer);
+    void notify(OperationAccount operation);
 }
