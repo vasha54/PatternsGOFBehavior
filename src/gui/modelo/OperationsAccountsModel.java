@@ -13,13 +13,14 @@ public class OperationsAccountsModel extends  DefaultTableModel implements IObse
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
      */
-    private static String [] heardesColums = {"Identificador","Propietario","Operación","Cantidad"};
+    private static String [] heardesColums = {"No.","Identificador","Propietario","Operación","Cantidad"};
 
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
      */
     public OperationsAccountsModel() {
         super( heardesColums,0);
+
     }
 
     public boolean isCellEditable(int row, int column) {
@@ -28,7 +29,7 @@ public class OperationsAccountsModel extends  DefaultTableModel implements IObse
 
     @Override
     public void update(OperationAccount subject) {
-        Object [] tuple = {subject.getIdentifier(),subject.getOwner(),subject.getOperation(),String.format("%.2f",subject.getAmount())};
+        Object [] tuple = {this.getRowCount()+1,subject.getIdentifier(),subject.getOwner(),subject.getOperation(),String.format("%.2f",subject.getAmount())};
         this.insertRow(0,tuple);
         this.fireTableDataChanged();
     }

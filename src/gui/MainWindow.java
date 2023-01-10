@@ -147,6 +147,7 @@ public class MainWindow extends JFrame implements ActionListener {
         jTableUpdateAccounts = new JTable();
         jTableUpdateAccounts.setModel(modelUpdateAccounts);
 
+
         jScrollPanelUpdateAccounts.setViewportView(jTableUpdateAccounts);
         jPanelUpdateAccounts.add(jScrollPanelUpdateAccounts);
 
@@ -162,6 +163,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
         jTableOperationsAccounts = new JTable();
         jTableOperationsAccounts.setModel(modelOperationsAccounts);
+        jTableOperationsAccounts.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         jScrollPanelOperationsAccounts.setViewportView(jTableOperationsAccounts);
         jPanelOperationsAccounts.add(jScrollPanelOperationsAccounts);
