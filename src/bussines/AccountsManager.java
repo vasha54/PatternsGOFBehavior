@@ -46,7 +46,7 @@ public class AccountsManager implements ISubjectOpertionAccount{
     
     protected String getIdentifier(){
         String buffer = _clock.instant().toString();
-        return buffer.substring(buffer.length() - 10);
+        return buffer.replace("Z", "").substring(buffer.length() - 10);
     }
     
     protected Account getAccount(){
