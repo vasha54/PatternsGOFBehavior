@@ -8,6 +8,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.TimerTask;
+import java.util.Timer;
 
 /**
  * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
@@ -36,6 +38,11 @@ public class MainWindow extends JFrame implements ActionListener {
     private UpdateAccountsModel modelUpdateAccounts;
     private OperationsAccountsModel modelOperationsAccounts;
 
+    private boolean startSimulation;
+
+    private Timer timer;
+    private Clock timerTask;
+
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
      */
@@ -46,6 +53,10 @@ public class MainWindow extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resource/iconos/cartman.png"));
         setIconImage(icon);
+        startSimulation=false;
+        timer =new Timer();
+        timerTask = new Clock();
+        timer.schedule(timerTask,1000, 1000);
     }
 
     /**
@@ -176,14 +187,26 @@ public class MainWindow extends JFrame implements ActionListener {
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
      */
-    private void stopSimulations() {
-        System.out.println("Stop Simulations");
-    }
+    private void stopSimulations() {startSimulation = false;}
 
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
      */
-    private void startSimulations() {
-        System.out.println("Start Simulations");
+    private void startSimulations() {startSimulation = true;}
+
+    /**
+     * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
+     */
+    private class Clock extends TimerTask {
+
+        /**
+         * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
+         */
+        @Override
+        public void run() {
+            if(startSimulation == true){
+
+            }
+        }
     }
 }
