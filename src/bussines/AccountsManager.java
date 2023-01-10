@@ -11,6 +11,7 @@ import model.Owner;
 import interfaces.ISubjectOpertionAccount;
 import java.util.ArrayList;
 import java.util.Random;
+import java.time.*;
 
 /**
  *
@@ -22,6 +23,7 @@ public class AccountsManager implements ISubjectOpertionAccount{
     protected List<OperationAccount> _operations;
     protected Random _random;
     protected List<Account> _accounts;
+    protected Clock _clock;
     
     public AccountsManager(){
         _observers = new ArrayList<IObserverOperationAccount>();
@@ -29,6 +31,7 @@ public class AccountsManager implements ISubjectOpertionAccount{
         _operations = new ArrayList<OperationAccount>();
         _random = new Random();
         _accounts = new ArrayList<Account>();
+        _clock = Clock.systemDefaultZone();
     }  
     
     protected OperationsAccount getOperation(){
@@ -42,7 +45,8 @@ public class AccountsManager implements ISubjectOpertionAccount{
     }
     
     protected String getIdentifier(){
-        return "La madre para en EnviromentTickCount ...";
+        String buffer = _clock.instant().toString();
+        return buffer.substring(buffer.length() - 10);
     }
     
     protected Account getAccount(){
