@@ -1,11 +1,14 @@
 package gui.modelo;
 
+import bussines.OperationAccount;
+import interfaces.IObserverOperationAccount;
+
 import javax.swing.table.DefaultTableModel;
 
 /**
  * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
  */
-public class OperationsAccountsModel extends  DefaultTableModel {
+public class OperationsAccountsModel extends  DefaultTableModel implements IObserverOperationAccount {
 
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
@@ -20,13 +23,11 @@ public class OperationsAccountsModel extends  DefaultTableModel {
      */
     public OperationsAccountsModel() {
         super( heardesColums,0);
-        //this.fireTableDataChanged();
-        this.rows = 0;
     }
 
-    @Override
+   /* @Override
     public Object getValueAt(int row,int column){
-        Object data = null;
+        Object data = "";
         if (0<= row && row <getRowCount() && 0<= column && column < getColumnCount()){
             switch (column){
                 case 0: //columna del identificador
@@ -41,13 +42,14 @@ public class OperationsAccountsModel extends  DefaultTableModel {
         }
         else throw new ArrayIndexOutOfBoundsException();
         return data;
-    }
+    }*/
 
-    /**
-     * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
-     */
+
+
     @Override
-    public int	getRowCount(){
-        return rows;
+    public void update(OperationAccount subject) {
+        Object [] tuple = {subject.getIdentifier(),subject.getOwner(),subject.getOperation(),subject.getAmount()};
+        this.insertRow(0,tuple);
+        this.fireTableDataChanged();
     }
 }

@@ -4,8 +4,7 @@
  */
 package bussines;
 
-import interfaces.IObserverAccount;
-import interfaces.ISubjectAccount;
+
 
 import java.util.ArrayList;
 import java.util.List;

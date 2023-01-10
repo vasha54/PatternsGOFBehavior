@@ -18,7 +18,7 @@ import util.ReadFileFromResources;
  */
 public class OwnerJSON {
 
-    private final String fileName= "resource/data/owner1.json" ;
+    private final String fileName= "resource/data/owner.json" ;
 
     public OwnerJSON() {
     }

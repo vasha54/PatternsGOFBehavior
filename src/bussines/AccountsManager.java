@@ -92,8 +92,8 @@ public class AccountsManager implements ISubjectOpertionAccount{
                 }
                 break;
         }
-        
-        notify(new OperationAccount(amount, account.getIdentifier(), operation, account.getOwner()));
+        if(account!=null)
+            notify(new OperationAccount(amount, account.getIdentifier(), operation, account.getOwner()));
     }
 
     @Override

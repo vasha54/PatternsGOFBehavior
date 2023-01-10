@@ -1,5 +1,6 @@
 package gui;
 
+import bussines.AccountsManager;
 import gui.modelo.OperationsAccountsModel;
 import gui.modelo.UpdateAccountsModel;
 
@@ -16,6 +17,7 @@ import java.util.Timer;
  */
 public class MainWindow extends JFrame implements ActionListener {
 
+    private AccountsManager manager;
     private JPanel jPanelHeader;
     private JPanel jPanelContent;
     private JPanel jPanelUpdateAccounts;
@@ -43,20 +45,26 @@ public class MainWindow extends JFrame implements ActionListener {
     private Timer timer;
     private Clock timerTask;
 
+    private int countOperations;
+
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
      */
     public MainWindow() {
+        startSimulation=false;
+        manager = new AccountsManager();
+        timer =new Timer();
+        timerTask = new Clock();
+        timer.schedule(timerTask,1000, 1000);
+        countOperations = 0;
+
         createUIComponents();
         createConnects();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resource/iconos/cartman.png"));
         setIconImage(icon);
-        startSimulation=false;
-        timer =new Timer();
-        timerTask = new Clock();
-        timer.schedule(timerTask,1000, 1000);
+
     }
 
     /**
@@ -65,6 +73,7 @@ public class MainWindow extends JFrame implements ActionListener {
     private void createConnects() {
         this.jButtonStart.addActionListener(this);
         this.jButtonStop.addActionListener(this);
+        this.manager.attach(this.modelOperationsAccounts);
     }
 
     /**
@@ -106,6 +115,7 @@ public class MainWindow extends JFrame implements ActionListener {
         jButtonStop.setMaximumSize(new Dimension(50, 50));
         jButtonStop.setMinimumSize(new Dimension(50, 50));
         jButtonStop.setPreferredSize(new Dimension(50, 50));
+        jButtonStop.setEnabled(false);
 
         jLabelTag = new JLabel();
         jLabelTag.setText("Contador de operaciones:");
@@ -187,12 +197,20 @@ public class MainWindow extends JFrame implements ActionListener {
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
      */
-    private void stopSimulations() {startSimulation = false;}
+    private void stopSimulations() {
+        startSimulation = false;
+        jButtonStop.setEnabled(startSimulation);
+        jButtonStart.setEnabled(!startSimulation);
+    }
 
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
      */
-    private void startSimulations() {startSimulation = true;}
+    private void startSimulations() {
+        startSimulation = true;
+        jButtonStop.setEnabled(startSimulation);
+        jButtonStart.setEnabled(!startSimulation);
+    }
 
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
@@ -205,7 +223,9 @@ public class MainWindow extends JFrame implements ActionListener {
         @Override
         public void run() {
             if(startSimulation == true){
-
+                countOperations++;
+                jLabelCounter.setText(String.valueOf(countOperations));
+                manager.SimulateOperation();
             }
         }
     }
