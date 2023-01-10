@@ -19,5 +19,7 @@ public class UpdateAccountsModel extends DefaultTableModel {
         super( heardesColums,0);
     }
 
-
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
 }
