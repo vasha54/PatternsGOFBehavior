@@ -42,17 +42,19 @@ public class AccountsManager implements ISubjectOpertionAccount{
     }
     
     protected String getIdentifier(){
-        return "000000";
+        return "La madre para en EnviromentTickCount ...";
     }
     
     protected Account getAccount(){
-        return _accounts.isEmpty() ? null : _accounts.get(_accounts.size());
+        return _accounts.isEmpty() ? null : _accounts.get(_accounts.size() - 1);
     }
     
     protected Owner getOwner(){
         if(_owners.isEmpty())
             return null;        
-        int index = _random.nextInt(0, _owners.size());        
+        if(_owners.size() == 1)
+            return _owners.get(0);        
+        int index = _random.nextInt(0, _owners.size() - 1);        
         Owner owner = _owners.get(index);
         _owners.remove(index);
         return owner;
