@@ -1,6 +1,8 @@
 package gui;
 
 import bussines.AccountsManager;
+import gui.components.OperationAccountsTable;
+import gui.components.OperationAccountsTableCellRenderer;
 import gui.modelo.OperationsAccountsModel;
 import gui.modelo.UpdateAccountsModel;
 
@@ -11,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.TimerTask;
 import java.util.Timer;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 /**
  * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
@@ -30,6 +35,12 @@ public class MainWindow extends JFrame implements ActionListener {
 
     private JLabel jLabelTag;
     private JLabel jLabelCounter;
+    
+    private JLabel jLabelTagAccount;
+    private JLabel jLabelCounterAccount;
+    
+    private JLabel jLabelTagConfiguration;
+    private JComboBox<String> jComboBoxConfiguration;
 
     private JScrollPane jScrollPanelUpdateAccounts;
     private JScrollPane jScrollPanelOperationsAccounts;
@@ -46,6 +57,9 @@ public class MainWindow extends JFrame implements ActionListener {
     private Clock timerTask;
 
     private int countOperations;
+    private int countAccounts;
+
+    private OperationAccountsTableCellRenderer renderTableOperationAccount;
 
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
@@ -57,6 +71,7 @@ public class MainWindow extends JFrame implements ActionListener {
         timerTask = new Clock();
         timer.schedule(timerTask,1000, 1000);
         countOperations = 0;
+        countAccounts = 0;
 
         createUIComponents();
         createConnects();
@@ -74,6 +89,8 @@ public class MainWindow extends JFrame implements ActionListener {
         this.jButtonStart.addActionListener(this);
         this.jButtonStop.addActionListener(this);
         this.manager.attach(this.modelOperationsAccounts);
+        this.manager.attach(this.modelUpdateAccounts);
+        
     }
 
     /**
@@ -116,17 +133,48 @@ public class MainWindow extends JFrame implements ActionListener {
         jButtonStop.setMinimumSize(new Dimension(50, 50));
         jButtonStop.setPreferredSize(new Dimension(50, 50));
         jButtonStop.setEnabled(false);
+        
+        Border margin = new EmptyBorder(5,5,5,5);
 
         jLabelTag = new JLabel();
-        jLabelTag.setText("Contador de operaciones:");
+        jLabelTag.setText("Cantidad de operaciones:");
         jLabelTag.setFont(new Font("Dialog", Font.BOLD, 12));
+        jLabelTag.setBorder(new CompoundBorder(jLabelTag.getBorder(), margin));
 
         jLabelCounter = new JLabel();
-        jLabelCounter.setText("0");
+        jLabelCounter.setText("  0");
         jLabelCounter.setFont(new Font("Dialog", Font.PLAIN, 12));
+        jLabelCounter.setBorder(new CompoundBorder(jLabelCounter.getBorder(), margin));
+
+        
+        jLabelTagAccount = new JLabel();
+        jLabelTagAccount.setText("Cantidad de cuentas:");
+        jLabelTagAccount.setFont(new Font("Dialog", Font.BOLD, 12));
+        jLabelTagAccount.setBorder(new CompoundBorder(jLabelTagAccount.getBorder(), margin));
+
+
+        jLabelCounterAccount = new JLabel();
+        jLabelCounterAccount.setText("  0");
+        jLabelCounterAccount.setFont(new Font("Dialog", Font.PLAIN, 12));
+        jLabelCounterAccount.setBorder(new CompoundBorder(jLabelCounterAccount.getBorder(), margin));
+        
+        jLabelTagConfiguration = new JLabel();
+        jLabelTagConfiguration.setText("Configuración:");
+        jLabelTagConfiguration.setFont(new Font("Dialog", Font.BOLD, 12));
+        jLabelTagConfiguration.setBorder(new CompoundBorder(jLabelTagAccount.getBorder(), margin));
+        
+        jComboBoxConfiguration = new JComboBox<>(new String[]{"Primera variante de configuración","Segunda variante de configuración"});
+        jComboBoxConfiguration.setBorder(new CompoundBorder(jComboBoxConfiguration.getBorder(), margin));
+        jComboBoxConfiguration.setMaximumSize(new Dimension(300, 32));
+        jComboBoxConfiguration.setMinimumSize(new Dimension(300, 32));
+        jComboBoxConfiguration.setPreferredSize(new Dimension(300, 32));
 
         jPanelHeader.add(jLabelTag);
         jPanelHeader.add(jLabelCounter);
+        jPanelHeader.add(jLabelTagAccount);
+        jPanelHeader.add(jLabelCounterAccount);
+        jPanelHeader.add(jLabelTagConfiguration);
+        jPanelHeader.add(jComboBoxConfiguration);
         jPanelHeader.add(fillerHeader);
         jPanelHeader.add(jButtonStart);
         jPanelHeader.add(jButtonStop);
@@ -152,7 +200,7 @@ public class MainWindow extends JFrame implements ActionListener {
         jPanelUpdateAccounts.add(jScrollPanelUpdateAccounts);
 
         jPanelOperationsAccounts = new JPanel();
-        jPanelOperationsAccounts.setBorder(BorderFactory.createTitledBorder(null, "Operaciones de las cuentas",
+        jPanelOperationsAccounts.setBorder(BorderFactory.createTitledBorder(null, "Operaciones de cuentas",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
                 new Font("Dialog", Font.BOLD, 12), new Color(51, 51, 51)));
         jPanelOperationsAccounts.setLayout(new BoxLayout(jPanelOperationsAccounts, BoxLayout.X_AXIS));
@@ -160,9 +208,11 @@ public class MainWindow extends JFrame implements ActionListener {
         jScrollPanelOperationsAccounts = new JScrollPane();
 
         modelOperationsAccounts = new OperationsAccountsModel();
+        renderTableOperationAccount = new OperationAccountsTableCellRenderer();
 
-        jTableOperationsAccounts = new JTable();
+        jTableOperationsAccounts = new OperationAccountsTable();
         jTableOperationsAccounts.setModel(modelOperationsAccounts);
+        jTableOperationsAccounts.setDefaultRenderer(Object.class,renderTableOperationAccount);
         jTableOperationsAccounts.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         jScrollPanelOperationsAccounts.setViewportView(jTableOperationsAccounts);
@@ -225,9 +275,10 @@ public class MainWindow extends JFrame implements ActionListener {
         @Override
         public void run() {
             if(startSimulation == true){
+                manager.SimulateOperation();
+                jLabelCounterAccount.setText(String.valueOf(jTableUpdateAccounts.getRowCount()));
                 countOperations++;
                 jLabelCounter.setText(String.valueOf(countOperations));
-                manager.SimulateOperation();
             }
         }
     }

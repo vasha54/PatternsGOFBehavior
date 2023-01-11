@@ -45,6 +45,6 @@ public class Owner {
     
     @Override
     public String toString (){
-        return String.format("%s %s (%s)", _firstName, _lastName, _idNumber);
+        return String.format("(%s) %s %s",_idNumber, _firstName, _lastName );
     }
 }
