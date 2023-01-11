@@ -44,13 +44,16 @@ public class Account {
     
     public void Deposit(double amount){
         _state = _state.Deposit(amount);
+        _state = _state.checking();
     }
     
     public void Subtraction(double amount){ 
         _state = _state.Subtraction(amount);
+        _state = _state.checking();
     }
     
     public void PayInterest(){
         _state = _state.PayInterest();
+        _state = _state.checking();
     }
 }

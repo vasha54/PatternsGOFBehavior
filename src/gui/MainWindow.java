@@ -3,6 +3,8 @@ package gui;
 import bussines.AccountsManager;
 import gui.components.OperationAccountsTable;
 import gui.components.OperationAccountsTableCellRenderer;
+import gui.components.UpdateAccountsTable;
+import gui.components.UpdateAccountsTableCellRenderer;
 import gui.modelo.OperationsAccountsModel;
 import gui.modelo.UpdateAccountsModel;
 
@@ -56,10 +58,11 @@ public class MainWindow extends JFrame implements ActionListener {
     private Timer timer;
     private Clock timerTask;
 
-    private int countOperations;
-    private int countAccounts;
+
 
     private OperationAccountsTableCellRenderer renderTableOperationAccount;
+
+    private UpdateAccountsTableCellRenderer renderTableUpdateAccounts;
 
 
     /**
@@ -70,9 +73,7 @@ public class MainWindow extends JFrame implements ActionListener {
         manager = new AccountsManager();
         timer =new Timer();
         timerTask = new Clock();
-        timer.schedule(timerTask,1000, 1000);
-        countOperations = 0;
-        countAccounts = 0;
+        timer.schedule(timerTask,500, 500);
 
         createUIComponents();
         createConnects();
@@ -147,7 +148,6 @@ public class MainWindow extends JFrame implements ActionListener {
         jLabelCounter.setFont(new Font("Dialog", Font.PLAIN, 12));
         jLabelCounter.setBorder(new CompoundBorder(jLabelCounter.getBorder(), margin));
 
-        
         jLabelTagAccount = new JLabel();
         jLabelTagAccount.setText("Cantidad de cuentas:");
         jLabelTagAccount.setFont(new Font("Dialog", Font.BOLD, 12));
@@ -169,6 +169,7 @@ public class MainWindow extends JFrame implements ActionListener {
         jComboBoxConfiguration.setMaximumSize(new Dimension(300, 32));
         jComboBoxConfiguration.setMinimumSize(new Dimension(300, 32));
         jComboBoxConfiguration.setPreferredSize(new Dimension(300, 32));
+        jComboBoxConfiguration.addActionListener(this);
 
         jPanelHeader.add(jLabelTag);
         jPanelHeader.add(jLabelCounter);
@@ -192,10 +193,12 @@ public class MainWindow extends JFrame implements ActionListener {
         jScrollPanelUpdateAccounts = new JScrollPane();
 
         modelUpdateAccounts = new UpdateAccountsModel();
+        renderTableUpdateAccounts = new UpdateAccountsTableCellRenderer();
 
-        jTableUpdateAccounts = new JTable();
+        jTableUpdateAccounts = new UpdateAccountsTable();
         jTableUpdateAccounts.setModel(modelUpdateAccounts);
-
+        jTableUpdateAccounts.setDefaultRenderer(Object.class,renderTableUpdateAccounts);
+        jTableUpdateAccounts.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         jScrollPanelUpdateAccounts.setViewportView(jTableUpdateAccounts);
         jPanelUpdateAccounts.add(jScrollPanelUpdateAccounts);
@@ -244,7 +247,17 @@ public class MainWindow extends JFrame implements ActionListener {
             startSimulations();
         }else if(this.jButtonStop == obj){
             stopSimulations();
+        } else if (this.jComboBoxConfiguration == obj) {
+            changeItemComboBoxConfiguration();
         }
+    }
+
+    /**
+     * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
+     */
+    private void changeItemComboBoxConfiguration() {
+        String itemSelect = (String) this.jComboBoxConfiguration.getSelectedItem();
+
     }
 
     /**
@@ -278,8 +291,7 @@ public class MainWindow extends JFrame implements ActionListener {
             if(startSimulation == true){
                 manager.SimulateOperation();
                 jLabelCounterAccount.setText(String.valueOf(jTableUpdateAccounts.getRowCount()));
-                countOperations++;
-                jLabelCounter.setText(String.valueOf(countOperations));
+                jLabelCounter.setText(String.valueOf(modelOperationsAccounts.getRowCount()));
             }
         }
     }

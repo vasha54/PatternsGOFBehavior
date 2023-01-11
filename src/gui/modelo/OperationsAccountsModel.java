@@ -44,13 +44,13 @@ public class OperationsAccountsModel extends  DefaultTableModel implements IObse
 
         switch (subject.getOperation()){
             case SUBSTRACT:
-                background=Color.RED;
+                background=Color.PINK;
                 break;
             case DEPOSIT:
-                background=Color.GREEN;
+                background=new Color(102,187,106);
                 break;
             case PAY_INTEREST:
-                background=new Color(0,127,0);
+                background=new Color(152,237,156);
                 break;
         }
 

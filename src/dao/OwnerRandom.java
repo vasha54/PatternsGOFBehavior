@@ -62,7 +62,7 @@ public class OwnerRandom {
     public JSONArray getOwners() {
         JSONArray array =new JSONArray();
 
-        int countOwner = getRandomInt(10,50);
+        int countOwner = getRandomInt(60,120);
         while (countOwner > 0){
             array.add(generateOwner());
             countOwner--;

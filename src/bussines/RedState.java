@@ -15,7 +15,7 @@ public class RedState extends StateAccount{
         _balance = balance;
         
         _interest = 0.0f;
-        _lowerLimit = -100.0f;
+        _lowerLimit = Double.MIN_VALUE;
         _upperLimit = 0.0f;
         _serviceFee = 15.0f;
     }
@@ -45,8 +45,13 @@ public class RedState extends StateAccount{
     @Override
     public StateAccount PayInterest() {
         return this;
-    }   
-    
+    }
+
+    @Override
+    public StateAccount checking() {
+        return StateChangeCheck();
+    }
+
     @Override
     public String toString(){
         return "RedState";

@@ -21,4 +21,6 @@ public abstract class StateAccount {
     public abstract StateAccount Deposit(double amount);
     public abstract StateAccount Subtraction(double amount);
     public abstract StateAccount PayInterest();
+
+    public abstract StateAccount checking();
 }

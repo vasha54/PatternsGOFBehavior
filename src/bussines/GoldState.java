@@ -13,8 +13,8 @@ public class GoldState extends StateAccount{
         _balance = balance;
         
         _interest = 0.07f;
-        _lowerLimit = 10000.0f;
-        _upperLimit = 1000000.0f;
+        _lowerLimit = 1000.0f;
+        _upperLimit = Double.MAX_VALUE;
     }
     
     private StateAccount StateChangeCheck(){
@@ -44,6 +44,11 @@ public class GoldState extends StateAccount{
     public StateAccount PayInterest() {
         _balance += _interest * _balance;
         
+        return StateChangeCheck();
+    }
+
+    @Override
+    public StateAccount checking() {
         return StateChangeCheck();
     }
 
