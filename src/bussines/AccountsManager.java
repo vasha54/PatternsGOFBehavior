@@ -5,10 +5,9 @@
 package bussines;
 
 import dao.OwnerProvider;
-import interfaces.IObserverOperationAccount;
+import interfaces.*;
 import java.util.List;
 import model.Owner;
-import interfaces.ISubjectOpertionAccount;
 import java.util.ArrayList;
 import java.util.Random;
 import java.time.*;
@@ -17,16 +16,18 @@ import java.time.*;
  *
  * @author Josval
  */
-public class AccountsManager implements ISubjectOpertionAccount{
+public class AccountsManager implements ISubjectOpertionAccount, ISubjectAccount{
     protected List<Owner> _owners;
-    protected List<IObserverOperationAccount> _observers;
+    protected List<IObserverOperationAccount> _observersOperationAccount;
+    protected List<IObserverAccount> _observersAccount;
     protected List<OperationAccount> _operations;
     protected Random _random;
     protected List<Account> _accounts;
     protected Clock _clock;
     
     public AccountsManager(){
-        _observers = new ArrayList<IObserverOperationAccount>();
+        _observersOperationAccount = new ArrayList<IObserverOperationAccount>();
+        _observersAccount = new ArrayList<IObserverAccount>();
         _owners = new OwnerProvider().getOwners();
         _operations = new ArrayList<OperationAccount>();
         _random = new Random();
@@ -45,20 +46,23 @@ public class AccountsManager implements ISubjectOpertionAccount{
     }
     
     protected String getIdentifier(){
-        String buffer = _clock.instant().toString();
-        return buffer.replace("Z", "").substring(buffer.length() - 10);
+        String buffer = _clock.instant().toString();            
+        return buffer.replace("Z", "")
+                     .replace(":", "")
+                     .replace(".", "")
+                     .substring(buffer.length() - 15);
     }
     
     protected Account getAccount(){
-        return _accounts.isEmpty() ? null : _accounts.get(_accounts.size() - 1);
+        return _accounts.isEmpty() ? null  : _accounts.get(
+               _accounts.size() == 1 ? 0 : _random.nextInt(0, _accounts.size() - 1)                
+        );
     }
     
     protected Owner getOwner(){
         if(_owners.isEmpty())
-            return null;        
-        if(_owners.size() == 1)
-            return _owners.get(0);        
-        int index = _random.nextInt(0, _owners.size() - 1);        
+            return null;
+        int index = _owners.size() == 1 ? 0 :_random.nextInt(0, _owners.size() - 1);        
         Owner owner = _owners.get(index);
         _owners.remove(index);
         return owner;
@@ -71,7 +75,7 @@ public class AccountsManager implements ISubjectOpertionAccount{
     public void SimulateOperation(){
         OperationsAccount operation = getOperation();
         Account account = getAccount();
-        double amount = getAmmount();
+        double amount = 0;
         
         switch (operation) {
             default:
@@ -84,11 +88,13 @@ public class AccountsManager implements ISubjectOpertionAccount{
                 break;
             case DEPOSIT:
                 if(account != null){
+                    amount = getAmmount();
                     account.Deposit(amount);
                 }
                 break;
             case SUBSTRACT:
                 if(account != null){
+                    amount = getAmmount();
                     account.Subtraction(amount);
                 }
                 break;
@@ -98,23 +104,41 @@ public class AccountsManager implements ISubjectOpertionAccount{
                 }
                 break;
         }
-        if(account!=null)
+        if(account!=null){
             notify(new OperationAccount(amount, account.getIdentifier(), operation, account.getOwner()));
+            notify(account);
+        }
     }
 
     @Override
     public void attach(IObserverOperationAccount observer) {
-        _observers.add(observer);
+        _observersOperationAccount.add(observer);
     }
 
     @Override
     public void detach(IObserverOperationAccount observer) {
-        _observers.remove(observer);
+        _observersOperationAccount.remove(observer);
     }
 
     @Override
     public void notify(OperationAccount operation) {
-        for(IObserverOperationAccount observer : _observers)
+        for(IObserverOperationAccount observer : _observersOperationAccount)
             observer.update(operation);
+    }
+
+    @Override
+    public void attach(IObserverAccount observer) {
+        _observersAccount.add(observer);
+    }
+
+    @Override
+    public void detach(IObserverAccount observer) {
+        _observersAccount.remove(observer);
+    }
+
+    @Override
+    public void notify(Account account) {
+        for(IObserverAccount observer : _observersAccount)
+            observer.Update(account);
     }
 }
