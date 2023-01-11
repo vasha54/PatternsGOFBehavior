@@ -61,6 +61,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
     private OperationAccountsTableCellRenderer renderTableOperationAccount;
 
+
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
      */

@@ -24,6 +24,7 @@ public class OperationsAccountsModel extends  DefaultTableModel implements IObse
      */
     public OperationsAccountsModel() {
         super( heardesColums,0);
+
         rowColours =new ArrayList<Color>();
     }
 
