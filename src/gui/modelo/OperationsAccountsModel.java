@@ -5,6 +5,7 @@ import interfaces.IObserverOperationAccount;
 
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class OperationsAccountsModel extends  DefaultTableModel implements IObse
      */
     @Override
     public void update(OperationAccount subject) {
-        Object [] tuple = {this.getRowCount()+1,subject.getIdentifier(),subject.getOwner(),subject.getOperation(),String.format("$ %.2f",subject.getAmount())};
+        Object [] tuple = {this.getRowCount()+1,subject.getIdentifier(),subject.getOwner(),subject.getOperation(),subject.getAmount() == 0 ? "" :new DecimalFormat("CUP 000,000,000.00  ").format(subject.getAmount())};
         Color background = Color.WHITE;
 
         switch (subject.getOperation()){

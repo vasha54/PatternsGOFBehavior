@@ -33,10 +33,11 @@ public class AccountsManager implements ISubjectOpertionAccount, ISubjectAccount
         _random = new Random();
         _accounts = new ArrayList<Account>();
         _clock = Clock.systemDefaultZone();
+        //EnvironmentAccount.getInstance().setCreatorStateAccountConfig(new StateAccountConfig2());
     }  
     
-    protected OperationsAccount getOperation(){
-        switch (_random.nextInt(0, 4)) {
+    protected OperationsAccount getOperation(){        
+        switch (_accounts.isEmpty() ? 0 :_random.nextInt(0, 4)) {
             default:
             case 0: return OperationsAccount.CREATE;
             case 1: return OperationsAccount.DEPOSIT;
@@ -69,12 +70,12 @@ public class AccountsManager implements ISubjectOpertionAccount, ISubjectAccount
     }
     
     protected double getAmmount(){
-        return _random.nextDouble(1, 1000);
+        return _random.nextDouble(1, 5000);
     }
     
     public void SimulateOperation(){
         OperationsAccount operation = getOperation();
-        Account account = getAccount();
+        Account account = null;
         double amount = 0;
         
         switch (operation) {
@@ -86,25 +87,22 @@ public class AccountsManager implements ISubjectOpertionAccount, ISubjectAccount
                     _accounts.add(account);
                 }
                 break;
-            case DEPOSIT:
-                if(account != null){
+            case DEPOSIT:                
+                    account = getAccount();
                     amount = getAmmount();
-                    account.Deposit(amount);
-                }
+                    account.Deposit(amount);                
                 break;
-            case SUBSTRACT:
-                if(account != null){
+            case SUBSTRACT:                
+                    account = getAccount();
                     amount = getAmmount();
-                    account.Subtraction(amount);
-                }
+                    account.Subtraction(amount);                
                 break;
             case PAY_INTEREST:
-                if(account != null){
+                    account = getAccount();
                     account.PayInterest();
-                }
                 break;
         }
-        if(account!=null){
+        if(account != null){
             notify(new OperationAccount(amount, account.getIdentifier(), operation, account.getOwner()));
             notify(account);
         }

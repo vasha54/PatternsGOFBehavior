@@ -3,6 +3,7 @@ package gui.modelo;
 import bussines.Account;
 import javax.swing.table.DefaultTableModel;
 import interfaces.*;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class UpdateAccountsModel extends DefaultTableModel implements IObserverA
 
     @Override
     public void Update(Account account) {
-        Object [] tuple = {account.getIdentifier(), account.getOwner(), account.getState().toString().toUpperCase(), String.format("$ %.2f", account.getBalance()) };
+        Object [] tuple = {account.getIdentifier(), account.getOwner(), account.getState().toString().toUpperCase(), new DecimalFormat(" CUP 000,000,000.00  ").format(account.getBalance()) };
         
         if(!this.map.containsKey(account.getIdentifier()))
         {

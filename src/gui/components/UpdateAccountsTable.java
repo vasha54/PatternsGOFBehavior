@@ -29,7 +29,7 @@ public class UpdateAccountsTable extends JTable {
         int align = JLabel.LEFT;
 
         switch (col){
-            case 0,2:
+            case 0:
                 align=JLabel.CENTER;
                 break;
             case 3:

@@ -39,7 +39,7 @@ public class Account {
     public Account(String identifier, Owner owner){
         this._identifier = identifier;
         this._owner = owner;
-        this._state = new SilverState(100);
+        this._state = EnvironmentAccount.getInstance().getCreatorAccountConfig().getInitialState();
     }
     
     public void Deposit(double amount){

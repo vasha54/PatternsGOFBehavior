@@ -1,6 +1,10 @@
 package gui;
 
 import bussines.AccountsManager;
+import bussines.CreatorStateAccountConfig;
+import bussines.EnvironmentAccount;
+import bussines.StateAccountConfig1;
+import bussines.StateAccountConfig2;
 import gui.components.OperationAccountsTable;
 import gui.components.OperationAccountsTableCellRenderer;
 import gui.components.UpdateAccountsTable;
@@ -13,11 +17,13 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableColumn;
 
 /**
  * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
@@ -81,7 +87,8 @@ public class MainWindow extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resource/iconos/cartman.png"));
         setIconImage(icon);
-
+        
+        this.changeItemComboBoxConfiguration();
     }
 
     /**
@@ -185,7 +192,7 @@ public class MainWindow extends JFrame implements ActionListener {
         jPanelContent.setLayout(new BoxLayout(jPanelContent, BoxLayout.X_AXIS));
 
         jPanelUpdateAccounts = new JPanel();
-        jPanelUpdateAccounts.setBorder(BorderFactory.createTitledBorder(null, "Actualización de cuentas",
+        jPanelUpdateAccounts.setBorder(BorderFactory.createTitledBorder(null, "Actualización de estados de cuentas",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
                 new Font("Dialog", Font.BOLD, 12), new Color(51, 51, 51)));
         jPanelUpdateAccounts.setLayout(new BoxLayout(jPanelUpdateAccounts, BoxLayout.X_AXIS));
@@ -198,6 +205,22 @@ public class MainWindow extends JFrame implements ActionListener {
         jTableUpdateAccounts = new UpdateAccountsTable();
         jTableUpdateAccounts.setModel(modelUpdateAccounts);
         jTableUpdateAccounts.setDefaultRenderer(Object.class,renderTableUpdateAccounts);
+        
+        TableColumn column = jTableUpdateAccounts.getColumnModel().getColumn(0);
+        column.setPreferredWidth(100);
+        column.setMaxWidth(100);
+        column.setMinWidth(100);
+        
+        column = jTableUpdateAccounts.getColumnModel().getColumn(2);
+        column.setPreferredWidth(130);
+        column.setMaxWidth(130);
+        column.setMinWidth(130);
+        
+        column = jTableUpdateAccounts.getColumnModel().getColumn(3);
+        column.setPreferredWidth(140);
+        column.setMaxWidth(140);
+        column.setMinWidth(140);
+        
         jTableUpdateAccounts.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         jScrollPanelUpdateAccounts.setViewportView(jTableUpdateAccounts);
@@ -217,8 +240,28 @@ public class MainWindow extends JFrame implements ActionListener {
         jTableOperationsAccounts = new OperationAccountsTable();
         jTableOperationsAccounts.setModel(modelOperationsAccounts);
         jTableOperationsAccounts.setDefaultRenderer(Object.class,renderTableOperationAccount);
+        
+        column = jTableOperationsAccounts.getColumnModel().getColumn(0);
+        column.setPreferredWidth(70);
+        column.setMaxWidth(70);
+        column.setMinWidth(70);
+        
+        column = jTableOperationsAccounts.getColumnModel().getColumn(1);
+        column.setPreferredWidth(100);
+        column.setMaxWidth(100);
+        column.setMinWidth(100);
+        
+        column = jTableOperationsAccounts.getColumnModel().getColumn(3);
+        column.setPreferredWidth(130);
+        column.setMaxWidth(130);
+        column.setMinWidth(130);
+        
+        column = jTableOperationsAccounts.getColumnModel().getColumn(4);
+        column.setPreferredWidth(130);
+        column.setMaxWidth(130);
+        column.setMinWidth(130);
+        
         jTableOperationsAccounts.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-
         jScrollPanelOperationsAccounts.setViewportView(jTableOperationsAccounts);
         jPanelOperationsAccounts.add(jScrollPanelOperationsAccounts);
 
@@ -255,9 +298,11 @@ public class MainWindow extends JFrame implements ActionListener {
     /**
      * @author Luis Andres Valido Fajardo luis.valido1989@gmail.com
      */
-    private void changeItemComboBoxConfiguration() {
-        String itemSelect = (String) this.jComboBoxConfiguration.getSelectedItem();
-
+    private void changeItemComboBoxConfiguration() {       
+        EnvironmentAccount.getInstance().setCreatorStateAccountConfig(
+            new CreatorStateAccountConfig[]{new StateAccountConfig1(),new StateAccountConfig2()}[this.jComboBoxConfiguration.getSelectedIndex()]
+        );
+        
     }
 
     /**

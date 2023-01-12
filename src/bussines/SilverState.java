@@ -11,8 +11,7 @@ package bussines;
 public class SilverState extends StateAccount{
     
     public SilverState(double balance) {
-        _balance = balance;
-        
+        _balance = balance;        
         _interest = 0.04f;
         _lowerLimit = 1.0f;
         _upperLimit = 1000.0f;
@@ -23,28 +22,24 @@ public class SilverState extends StateAccount{
             return new RedState(_balance);
         else if (_balance > _upperLimit)
             return new GoldState(_balance);
-
         return this;
     }    
 
     @Override
     public StateAccount Deposit(double amount) {
-        _balance += amount;
-        
+        _balance += amount;        
         return StateChangeCheck();        
     }
 
     @Override
     public StateAccount Subtraction(double amount) {
-        _balance -= amount;
-        
+        _balance -= amount;        
         return StateChangeCheck();
     }
 
     @Override
     public StateAccount PayInterest() {
-        _balance += _interest * _balance;
-        
+        _balance += _interest * _balance;        
         return StateChangeCheck();
     }
 
